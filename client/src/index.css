@@ -1,0 +1,173 @@
+* {
+    margin: 0
+}
+html,
+body,
+#root,
+.sceneWrapper
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+.fileLabel {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px dashed rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.fileLabel:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+  
+.fileInput {
+    display: none;
+}
+
+.fileName {
+    font-size: 14px;
+    color: #555;
+}
+
+.container {
+    display: flex;
+    align-items: inherit;
+}
+
+.btn {
+    padding: 3px 20px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: #2EE59D;
+    width: 140px;
+    height: 35px;
+    font-weight: 500;
+    color: white;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease 0s;
+    outline: none;
+    letter-spacing: 1px;
+    margin: 0 auto;
+}
+
+.btn.upload {
+    width: 100%;
+}
+  
+.btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+.uploadWidget,
+.downloadWidget {
+    padding: 30px;
+    flex: 1;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    border-radius: 6px;
+    min-width: 300px;
+    z-index: 99;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+	background: rgba(255, 255, 255, 0.5);
+	backdrop-filter: blur(20px);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.uploadWidget {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.uploadWidget h2 {
+    margin-bottom: 10px;
+}
+
+.downloadWidget {
+    top: unset;
+    width: unset;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.copyUrlBlock {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+}
+
+.downloadUrlInput {
+    padding: 10px;
+    border: 0px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.sceneWrapper {
+    flex: 2;
+    background: #FAFAFA;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+  
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+  
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

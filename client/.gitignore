@@ -1,0 +1,5 @@
+# Environment files (local configs)
+/.env.*
+
+# Dependency directories
+node_modules/
