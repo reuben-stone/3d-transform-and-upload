@@ -18,6 +18,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    color: rgba(0, 0, 0, 0.8)
 }
 
 a {
@@ -133,7 +134,7 @@ a {
     background: rgba(0, 0, 0, 0.04);
     border-radius: 6px;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
 }
 
 .sceneWrapper {
