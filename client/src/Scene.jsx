@@ -18,7 +18,7 @@ const Scene = ({ modelUrl }) => {
     return (
         <Canvas
             shadows 
-            camera={{ position: [0, 1, 2], fov: 65 }} 
+            camera={{ position: [1, 1, 4], fov: 60 }} 
             style={{ width: "100%", height: "100vh" }}
         >
             <ambientLight intensity={0.5} />
@@ -33,7 +33,7 @@ const Scene = ({ modelUrl }) => {
             <Center>
                 <primitive object={scene} scale={[1, 1, 1]} castShadow receiveShadow />
             </Center>
-            <OrbitControls enableDamping />
+            <OrbitControls enableDamping target={[0, 0, 0]} />
         </Canvas>
     );
 };
