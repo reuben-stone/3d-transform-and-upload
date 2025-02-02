@@ -20,13 +20,13 @@ This project is a full-stack solution for processing 3D object files. It allows 
 - **Conversion and Optimization:**  
   - Converts `.obj` to `.gltf` using `obj2gltf`.
   - Optimizes the file using `gltf-pipeline` with Draco compression.
-  - (Optional) Adjusts color schemes and reduces polygon count.
+  - Adjusts color schemes and reduces polygon count.
 - **Storage:**  
   - Saves the optimized `.glb` file to Firebase Storage with a unique, standardized filename.
 - **User Interface:**  
   - Built with React and Vite.
   - Provides a file input, upload button, and a loading spinner.
-  - Displays the public URL for the optimized file after processing.
+  - Displays the public URL for the optimized file and a download button after processing.
 
 ## Project Structure
 
