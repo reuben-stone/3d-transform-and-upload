@@ -2,52 +2,44 @@ const obj2gltf = require("obj2gltf");
 const gltfPipeline = require("gltf-pipeline");
 const fs = require("fs");
 const path = require("path");
+const { MeshoptSimplifier } = require("meshoptimizer");
 
 async function processOBJ(objBuffer) {
-    console.log('In optimizer');
+    console.log("In optimizer");
 
     try {
-        // Ensure the buffer is valid
         if (!objBuffer) {
-            throw new Error('No buffer provided for .obj file.');
+            throw new Error("No buffer provided for .obj file.");
         }
 
-        // Save the buffer to a temporary file to avoid file name length issues
-        const tempFilePath = path.join(__dirname, 'temp.obj');
+        // Save OBJ to a temporary file
+        const tempFilePath = path.join(__dirname, "temp.obj");
         fs.writeFileSync(tempFilePath, objBuffer);
 
-        // Convert .obj to GLTF 
-        console.log('Converting OBJ to GLTF...');
+        console.log("Converting OBJ to GLTF...");
         let gltf = await obj2gltf(tempFilePath);
 
-        // Clean up the temporary file
+        // Clean up temporary file
         fs.unlinkSync(tempFilePath);
 
-        // Add random colors to the GLTF materials
+        // Apply random colors
         if (gltf && gltf.nodes) {
             console.log("Applying random colors...");
-
-            const randomColorPalette = [
-                [1, 0, 0], // Red
-                [0, 1, 0], // Green
-                [0, 0, 1], // Blue
-                [1, 1, 0], // Yellow
-                [1, 0, 1], // Magenta
-                [0, 1, 1], // Cyan
+            const colorPalette = [
+                [1, 0, 0], [0, 1, 0], [0, 0, 1], [1, 1, 0], [1, 0, 1], [0, 1, 1]
             ];
-
             gltf.nodes.forEach((node) => {
                 if (node.mesh !== undefined && gltf.meshes[node.mesh]) {
                     gltf.meshes[node.mesh].primitives.forEach((primitive) => {
                         if (!gltf.materials) gltf.materials = [];
 
-                        const randomColor = randomColorPalette[Math.floor(Math.random() * randomColorPalette.length)];
+                        const randomColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
                         const materialIndex = gltf.materials.length;
                         gltf.materials.push({
-                                pbrMetallicRoughness: {
+                            pbrMetallicRoughness: {
                                 baseColorFactor: [...randomColor, 1], // RGB + Alpha
-                                metallicFactor: 0.1, // Slightly metallic
-                                roughnessFactor: 0.9, // High roughness
+                                metallicFactor: 0.1,
+                                roughnessFactor: 0.9,
                             },
                         });
 
@@ -57,6 +49,27 @@ async function processOBJ(objBuffer) {
             });
         }
 
+        // console.log("Reducing polygon count...");
+        // if (gltf.meshes) {
+        //     for (const mesh of Object.values(gltf.meshes)) {
+        //         mesh.primitives.forEach((primitive) => {
+        //             if (primitive.attributes.POSITION) {
+        //                 const vertices = new Float32Array(primitive.attributes.POSITION.array);
+        //                 const indices = primitive.indices ? new Uint16Array(primitive.indices.array) : null;
+
+        //                 if (indices) {
+        //                     const targetRatio = 0.5; // Reduce to 50% of original polygons
+        //                     const targetCount = Math.floor(indices.length * targetRatio);
+        //                     const simplifiedIndices = new Uint16Array(targetCount);
+
+        //                     MeshoptSimplifier.simplify(indices, vertices, 3, simplifiedIndices, targetCount, 0.01);
+        //                     primitive.indices = { array: simplifiedIndices, type: 5123 }; // Update GLTF indices
+        //                 }
+        //             }
+        //         });
+        //     }
+        // }
+
         console.log("Optimizing GLTF with gltf-pipeline...");
         const gltfBuffer = Buffer.from(JSON.stringify(gltf));
 
@@ -64,11 +77,11 @@ async function processOBJ(objBuffer) {
             dracoOptions: { compressionLevel: 10 },
         });
 
-        // Return the optimized GLB
-        console.log('Optimization complete');
+        console.log("Optimization complete");
+
         return optimized.gltf;
     } catch (error) {
-        console.error('Error processing OBJ:', error);
+        console.error("Error processing OBJ:", error);
         throw new Error(`Failed to process OBJ: ${error.message}`);
     }
 }
