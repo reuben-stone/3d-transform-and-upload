@@ -65,7 +65,8 @@ This project is a full-stack solution for processing 3D object files. It allows 
    - **Conversion:** The file is converted from `.obj` to `.gltf` using `obj2gltf`.
    - **Optimization:**  
      - The converted file is optimized using `gltf-pipeline` with Draco compression.
-     - Additional optimizations, such as polygon reduction and colour palette adjustments, are applied.
+     - Polygon reduction using `meshoptimizer`. 
+     - Automated random color palette adjustment.
    - The optimized file is saved as a `.glb`.
 
 3. **Storage:**

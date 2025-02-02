@@ -45,7 +45,7 @@ function App() {
     <div className="container">
     
         <div className="uploadWidget">
-            <h2>3D Object Uploader</h2>
+            {/* <h2>3D Object Uploader</h2> */}
             <label htmlFor="fileUpload" className="fileLabel">
                 Select file
             </label>
