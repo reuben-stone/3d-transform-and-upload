@@ -68,7 +68,7 @@ function App() {
                     <label htmlFor="fileUpload" className="urlLabel">
                         Optimized Model URL: 
                     </label>
-                    <input type="text" readonly value={fileUrl} className="downloadUrlInput" />
+                    <input type="text" readOnly value={fileUrl} className="downloadUrlInput" />
                 </div>
                 <a className="btn" href={fileUrl} target="_blank" rel="noopener noreferrer">
                     Download

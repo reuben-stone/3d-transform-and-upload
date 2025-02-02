@@ -26,7 +26,12 @@ async function processOBJ(objBuffer) {
         if (gltf && gltf.nodes) {
             console.log("Applying random colors...");
             const colorPalette = [
-                [1, 0, 0], [0, 1, 0], [0, 0, 1], [1, 1, 0], [1, 0, 1], [0, 1, 1]
+                [1, 0, 0], 
+                [0, 1, 0], 
+                [0, 0, 1], 
+                [1, 1, 0], 
+                [1, 0, 1], 
+                [0, 1, 1]
             ];
             gltf.nodes.forEach((node) => {
                 if (node.mesh !== undefined && gltf.meshes[node.mesh]) {
