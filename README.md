@@ -101,8 +101,7 @@ This project is a full-stack solution for processing 3D object files. It allows 
    ```
 
 3. Set up Firebase:
-   - Place your Firebase service account JSON file in the backend directory.
-   - Update `firebaseConfig.js` with your Firebase credentials and bucket name.
+   - Place your Firebase web service config variables in a new .env file in server root see (/server/env.example for required vars). 
 
 4. Start the backend server:
    ```bash
