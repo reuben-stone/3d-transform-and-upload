@@ -70,7 +70,7 @@ function App() {
                     </label>
                     <input type="text" readOnly value={fileUrl} className="downloadUrlInput" />
                 </div>
-                <a className="btn" href={fileUrl} target="_blank" rel="noopener noreferrer">
+                <a className="btn" download href={fileUrl} target="_blank" rel="noopener noreferrer">
                     Download
                 </a>
             </div>
