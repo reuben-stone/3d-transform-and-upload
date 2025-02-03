@@ -2,6 +2,8 @@
 
 This project is a full-stack solution for processing 3D object files. It allows users to upload an `.obj` file, which is then converted to `.gltf`, optimized (by reducing polygon count and applying Draco compression), has its color palette automatically updated, and finally stored in Firebase Storage. The user interacts with a React-based front end built with Vite that provides a smooth experience with a loading spinner and displays a download URL and React Three Fiber Scene rendering their newly optimised model once processing is complete.
 
+![Screnshot](/screenshot.png?raw=true "Screenshot")
+
 ## Table of Contents
 
 - [Features](#features)
