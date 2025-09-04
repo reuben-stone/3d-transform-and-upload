@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Scene from "./Scene";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:3000";
 
 function App() {
     const [file, setFile] = useState(null);
