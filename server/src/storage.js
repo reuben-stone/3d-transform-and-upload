@@ -2,39 +2,54 @@ require("dotenv").config({ path: "../.env" });
 const { initializeApp } = require("firebase/app");
 const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 
-// Firebase config
+const DEBUG = process.env.DEBUG === "true";
+
+// --- Firebase Config ---
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Validate required env vars
+for (const [key, value] of Object.entries(firebaseConfig)) {
+  if (!value) {
+    throw new Error(`Missing Firebase environment variable: ${key}`);
+  }
+}
 
-// Get Firebase Storage
+// --- Firebase Init ---
+const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-// Function to upload file to Firebase Storage
+/**
+ * Uploads a GLB buffer to Firebase Storage and returns its public URL.
+ * @param {Buffer} glbBuffer - The binary GLB file buffer
+ * @returns {Promise<string>} - Public download URL
+ */
 async function uploadToFirebase(glbBuffer) {
   const fileName = `optimized-${Date.now()}.glb`;
   const storageRef = ref(storage, fileName);
-  
-  console.log('fileName', fileName);
-  console.log('storageRef', storageRef);
-  
-  // Upload the file to Firebase Storage
-  await uploadBytes(storageRef, glbBuffer, { contentType: "model/gltf-binary" });
 
-  // Get the public URL of the uploaded file
-  const downloadURL = await getDownloadURL(storageRef);
+  try {
+    if (DEBUG) console.log("Uploading:", fileName);
 
-  console.log('downloadURL', downloadURL);
+    await uploadBytes(storageRef, glbBuffer, {
+      contentType: "model/gltf-binary",
+    });
 
-  return downloadURL;
+    const downloadURL = await getDownloadURL(storageRef);
+
+    if (DEBUG) console.log("Download URL:", downloadURL);
+
+    return downloadURL;
+  } catch (err) {
+    console.error("Firebase upload failed:", err.message);
+    throw new Error("Upload to Firebase failed");
+  }
 }
 
 module.exports = { uploadToFirebase };
