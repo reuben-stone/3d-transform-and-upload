@@ -148,7 +148,7 @@ canvas {
     height: 100%;
 }
   
-.spinner-overlay {
+.spinnerOverlay {
     position: fixed;
     top: 0;
     left: 0;
